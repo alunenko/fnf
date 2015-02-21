@@ -73,6 +73,7 @@ $this->title = 'Fun/news feed';
                             $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
                             $usualLink = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
                             echo '<a style="font-size: 28px" href="' . $usualLink . '">'. $usualLink . '</a>';
+                            echo '<iframe src="'. $usualLink . '" width="100%" height="500px"></iframe>';
                         }
                     ?>
 

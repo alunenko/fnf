@@ -58,7 +58,7 @@ class SiteController extends Controller
             'totalCount' => $query->count(),
         ]);
 
-        $links = $query->orderBy('timestamp')
+        $links = $query->orderBy('timestamp desc')
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
