@@ -13,10 +13,10 @@ $this->title = 'Fun/news feed';
 ">
 
 
-<?php foreach ($links as $link): ?>
+<?php foreach ($links as $index=>$link): ?>
 
 <!-- post -->
-            <div style="
+            <div id="<?php echo 'post'.$index ?>" style="
     margin-bottom: 50px;
     border-bottom: 1px solid;
     padding-bottom: 25px;
