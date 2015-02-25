@@ -46,14 +46,6 @@ AppAsset::register($this);
                 ],
             ]);*/
 
-            /*echo yii\jui\DatePicker::widget(['name' => 'attributeName', 'clientOptions' => ['defaultDate' => '2014-01-01']]);*/
-            echo yii\jui\DatePicker::widget([
-                'name'  => 'from_date',
-                'value'  => date("Y-m-d H:i:s"),
-                //'language' => 'ru',
-                'dateFormat' => 'MM/dd/yyyy',
-            ]);
-
             NavBar::end();
         ?>
 

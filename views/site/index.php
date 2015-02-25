@@ -21,7 +21,7 @@ $this->title = 'Fun/news feed';
     border-bottom: 1px solid;
     padding-bottom: 25px;
 ">
-                <p><?php echo /*$link->author,*/ '<span>' . Yii::$app->formatter->asDate($link->timestamp, 'M/d/Y H:i:s') . '</span>' ?></p>
+                <p><?php echo Yii::$app->formatter->asDate($link->timestamp, 'M/d/Y H:i:s') ?></p>
                 <p>
                     <?php
                         if (strpos($link->link, 'youtu') !== false ) {
@@ -72,8 +72,7 @@ $this->title = 'Fun/news feed';
                             $startPos = strpos($link->link, 'href="');
                             $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
                             $usualLink = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
-                            echo '<a style="font-size: 28px" href="' . $usualLink . '">'. $usualLink . '</a>';
-                            echo '<iframe src="'. $usualLink . '" width="100%" height="500px"></iframe>';
+                            echo '<a style="font-size: 40px" href="' . $usualLink . '">'. $usualLink . '</a>';
                         }
                     ?>
 
