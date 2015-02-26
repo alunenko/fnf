@@ -24,11 +24,16 @@ $this->title = 'Fun/news feed';
                 <p><?php echo Yii::$app->formatter->asDate($link->timestamp, 'M/d/Y H:i:s') ?></p>
                 <p>
                     <?php
-                        if (strpos($link->link, 'youtu') !== false ) {
+                        if (strpos($link->link, 'youtube') !== false ) {
                             $startPos = strpos($link->link, '">');
                             $endPos = strpos($link->link, '</a>');
 
                             echo '<iframe width="420" height="315" src="' . str_replace("watch?v=", "v/", substr($link->link, $startPos+2, $endPos - $startPos-2)) . '" frameborder="0" allowfullscreen></iframe>';
+                        } else if (strpos($link->link, 'youtu.') !== false ) {
+                            $startPos = strpos($link->link, '">');
+                            $endPos = strpos($link->link, '</a>');
+
+                            echo '<iframe width="420" height="315" src="' . substr($link->link, $startPos+2, $endPos - $startPos-2) . '" frameborder="0" allowfullscreen></iframe>';
                         } else if ((strpos($link->link, 'jpg') !== false) || (strpos($link->link, 'gif') !== false) || (strpos($link->link, 'jpeg') !== false) || (strpos($link->link, 'png') !== false) || (strpos($link->link, 'vk.com/doc') !== false)) {
                             $startPos = strpos($link->link, '">');
                             $endPos = strpos($link->link, '</a>');
@@ -41,6 +46,7 @@ $this->title = 'Fun/news feed';
                             else {
                                 $startPos = strpos($link->link, '">');
                                 $endPos = strpos($link->link, '</a>');
+                                echo '<a href="' . substr($link->link, $startPos+2, $endPos - $startPos-2) . '">' . substr($link->link, $startPos+2, $endPos - $startPos-2) . '</a>';
                                 echo '<img src="'. substr($link->link, $startPos+2, $endPos - $startPos-2) . '"/>';   
                             }
                         } else if (strpos($link->link, 'coub') !== false) {
@@ -72,6 +78,7 @@ $this->title = 'Fun/news feed';
                             $startPos = strpos($link->link, 'href="');
                             $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
                             $usualLink = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
+
                             echo '<a style="font-size: 40px" href="' . $usualLink . '">'. $usualLink . '</a>';
                         }
                     ?>
