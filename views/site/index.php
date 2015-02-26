@@ -46,7 +46,7 @@ $this->title = 'Fun/news feed';
                             else {
                                 $startPos = strpos($link->link, '">');
                                 $endPos = strpos($link->link, '</a>');
-                                echo '<a href="' . substr($link->link, $startPos+2, $endPos - $startPos-2) . '">' . substr($link->link, $startPos+2, $endPos - $startPos-2) . '</a>';
+
                                 echo '<img src="'. substr($link->link, $startPos+2, $endPos - $startPos-2) . '"/>';   
                             }
                         } else if (strpos($link->link, 'coub') !== false) {
