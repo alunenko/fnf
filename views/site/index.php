@@ -23,12 +23,22 @@ $this->title = 'Fun/news feed';
 ">
                 <p><?php echo Yii::$app->formatter->asDate($link->timestamp, 'M/d/Y H:i:s') ?></p>
                 <p>
-                    <?php
+                    <?php /*check from scratch to 1/26/2015 12:21:29 */
                         if (strpos($link->link, 'youtube') !== false ) {
+
                             $startPos = strpos($link->link, '">');
                             $endPos = strpos($link->link, '</a>');
 
-                            echo '<iframe width="420" height="315" src="' . str_replace("watch?v=", "v/", substr($link->link, $startPos+2, $endPos - $startPos-2)) . '" frameborder="0" allowfullscreen></iframe>';
+                            if (strpos(substr($link->link, $startPos+2, $endPos - $startPos-2), '?feature=') == true) {
+                                $rrr = substr($link->link, $startPos+2, $endPos - $startPos-2);
+                                $zzz = str_replace("watch?feature=player_embedded", "", $rrr);
+                                $zzz1 = str_replace("&", "", $zzz);
+                                $zzz2 = str_replace("amp;v=", "v/", $zzz1);
+
+                                echo '<iframe width="420" height="315" src="' . $zzz2 . '" frameborder="0" allowfullscreen></iframe>';
+                            } else {
+                                echo '<iframe width="420" height="315" src="' . str_replace("watch?v=", "v/", substr($link->link, $startPos+2, $endPos - $startPos-2)) . '" frameborder="0" allowfullscreen></iframe>';
+                            }
                         } else if (strpos($link->link, 'youtu.') !== false ) {
                             $startPos = strpos($link->link, '.be/')+4;
                             $cutFirstPart = substr($link->link, $startPos);
@@ -37,6 +47,7 @@ $this->title = 'Fun/news feed';
 
                             echo '<iframe width="420" height="315" src=https://www.youtube.com/embed/' . $youTubeShortHash . ' frameborder="0" allowfullscreen></iframe>';
                         } else if ((strpos($link->link, 'jpg') !== false) || (strpos($link->link, 'gif') !== false) || (strpos($link->link, 'jpeg') !== false) || (strpos($link->link, 'png') !== false) || (strpos($link->link, 'vk.com/doc') !== false)) {
+                            /* TODO: check this timestamp 2/10/2015 18:04:04 and 2/10/2015 16:48:04 and 1/27/2015 10:15:00 */
                             $startPos = strpos($link->link, '">');
                             $endPos = strpos($link->link, '</a>');
 
@@ -76,6 +87,8 @@ $this->title = 'Fun/news feed';
                                allowscriptaccess="always" allowfullscreen="true" width="400" height="224"> 
                              </embed> 
                             </object>';
+                        }*/ /*else if (RUTUBE) {
+                            <iframe width="720" height="405" src="//rutube.ru/play/embed/7477613" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
                         }*/ else {
                             $startPos = strpos($link->link, 'href="');
                             $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
