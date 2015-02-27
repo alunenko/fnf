@@ -30,10 +30,12 @@ $this->title = 'Fun/news feed';
 
                             echo '<iframe width="420" height="315" src="' . str_replace("watch?v=", "v/", substr($link->link, $startPos+2, $endPos - $startPos-2)) . '" frameborder="0" allowfullscreen></iframe>';
                         } else if (strpos($link->link, 'youtu.') !== false ) {
-                            $startPos = strpos($link->link, '">');
-                            $endPos = strpos($link->link, '</a>');
+                            $startPos = strpos($link->link, '.be/')+4;
+                            $cutFirstPart = substr($link->link, $startPos);
+                            $endPos = strpos($cutFirstPart, '">');
+                            $youTubeShortHash = substr($cutFirstPart, 0, $endPos);
 
-                            echo '<iframe width="420" height="315" src="' . substr($link->link, $startPos+2, $endPos - $startPos-2) . '" frameborder="0" allowfullscreen></iframe>';
+                            echo '<iframe width="420" height="315" src=https://www.youtube.com/embed/' . $youTubeShortHash . ' frameborder="0" allowfullscreen></iframe>';
                         } else if ((strpos($link->link, 'jpg') !== false) || (strpos($link->link, 'gif') !== false) || (strpos($link->link, 'jpeg') !== false) || (strpos($link->link, 'png') !== false) || (strpos($link->link, 'vk.com/doc') !== false)) {
                             $startPos = strpos($link->link, '">');
                             $endPos = strpos($link->link, '</a>');
