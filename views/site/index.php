@@ -36,6 +36,13 @@ $this->title = 'Fun/news feed';
                                 $zzz2 = str_replace("amp;v=", "v/", $zzz1);
 
                                 echo '<iframe width="420" height="315" src="' . $zzz2 . '" frameborder="0" allowfullscreen></iframe>';
+                            } else if (strpos($link->link, '<ss ') == true) {
+                                $firstIter = strpos($link->link, '<a');
+                                $eee = substr($link->link, $firstIter+9);
+                                $secondIter = strpos($eee, '">h');
+                                $yyy = substr($eee, 0, $secondIter);
+
+                                echo '<iframe width="420" height="315" src="' . str_replace("watch?v=", "v/", $yyy) . '" frameborder="0" allowfullscreen></iframe>';
                             } else {
                                 echo '<iframe width="420" height="315" src="' . str_replace("watch?v=", "v/", substr($link->link, $startPos+2, $endPos - $startPos-2)) . '" frameborder="0" allowfullscreen></iframe>';
                             }
@@ -45,7 +52,7 @@ $this->title = 'Fun/news feed';
                             $endPos = strpos($cutFirstPart, '">');
                             $youTubeShortHash = substr($cutFirstPart, 0, $endPos);
 
-                            echo '<iframe width="420" height="315" src=https://www.youtube.com/embed/' . $youTubeShortHash . ' frameborder="0" allowfullscreen></iframe>';
+                            #echo '<iframe width="420" height="315" src=https://www.youtube.com/embed/' . $youTubeShortHash . ' frameborder="0" allowfullscreen></iframe>';
                         } else if ((strpos($link->link, 'jpg') !== false) || (strpos($link->link, 'gif') !== false) || (strpos($link->link, 'jpeg') !== false) || (strpos($link->link, 'png') !== false) || (strpos($link->link, 'vk.com/doc') !== false)) {
                             /* TODO: check this timestamp 2/10/2015 18:04:04 and 2/10/2015 16:48:04 and 1/27/2015 10:15:00 */
                             $startPos = strpos($link->link, '">');
@@ -57,10 +64,30 @@ $this->title = 'Fun/news feed';
                                 echo '404';
                             }
                             else {
-                                $startPos = strpos($link->link, '">');
-                                $endPos = strpos($link->link, '</a>');
-
-                                echo '<img src="'. substr($link->link, $startPos+2, $endPos - $startPos-2) . '"/>';   
+                                if (strpos(substr($link->link, $startPos+2, $endPos - $startPos-2), 'gifv') == true) {
+                                    echo '<img src="'. str_replace("gifv", "gif", substr($link->link, $startPos+2, $endPos - $startPos-2)) . '"/>';   
+                                } else if (strpos(substr($link->link, $startPos+2, $endPos - $startPos-2), 'dropbox') == true) {
+                                    $dropbox = substr($link->link, $startPos+2, $endPos - $startPos-2);
+                                    echo '<a style="font-size: 40px; word-break: break-all;" href="' . $dropbox . '" target="_blank">'. $dropbox . '</a>';
+                                } else if (strpos($link->link, 'href') == false) {
+                                    if (strpos($link->link, 'jpg') == true) {
+                                        $endPos = strpos($link->link, '.jpg');
+                                        echo '<img style="max-width: 100%;" src="'. substr($link->link, 0, $endPos+4) . '"/>';
+                                    } else if (strpos($link->link, 'jpeg') == true) {
+                                        $endPos = strpos($link->link, '.jpeg');
+                                        echo '<img style="max-width: 100%;" src="'. substr($link->link, 0, $endPos+5) . '"/>';
+                                    } else if (strpos($link->link, 'gif') == true) {
+                                        $endPos = strpos($link->link, '.gif');
+                                        echo '<img style="max-width: 100%;" src="'. substr($link->link, 0, $endPos+4) . '"/>';
+                                    } else if (strpos($link->link, 'png') == true) {
+                                        $endPos = strpos($link->link, '.png');
+                                        echo '<img style="max-width: 100%;" src="'. substr($link->link, 0, $endPos+4) . '"/>';
+                                    } else {
+                                        echo 'add new if';
+                                    }
+                                } else {
+                                    echo '<img style="max-width: 100%;" src="'. substr($link->link, $startPos+2, $endPos - $startPos-2) . '"/>';
+                                }
                             }
                         } else if (strpos($link->link, 'coub') !== false) {
                             $startPos = strpos($link->link, '">');
@@ -94,7 +121,7 @@ $this->title = 'Fun/news feed';
                             $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
                             $usualLink = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
 
-                            echo '<a style="font-size: 40px" href="' . $usualLink . '">'. $usualLink . '</a>';
+                            echo '<a style="font-size: 40px; word-break: break-all;" href="' . $usualLink . '" target="_blank">'. $usualLink . '</a>';
                         }
                     ?>
 
