@@ -52,8 +52,14 @@ $this->title = 'Fun/news feed';
                             $endPos = strpos($cutFirstPart, '">');
                             $youTubeShortHash = substr($cutFirstPart, 0, $endPos);
 
-                            #echo '<iframe width="420" height="315" src=https://www.youtube.com/embed/' . $youTubeShortHash . ' frameborder="0" allowfullscreen></iframe>';
-                        } else if ((strpos($link->link, 'jpg') !== false) || (strpos($link->link, 'gif') !== false) || (strpos($link->link, 'jpeg') !== false) || (strpos($link->link, 'png') !== false) || (strpos($link->link, 'vk.com/doc') !== false)) {
+                            echo '<iframe width="420" height="315" src=https://www.youtube.com/embed/' . $youTubeShortHash . ' frameborder="0" allowfullscreen></iframe>';
+                        } /*else if (strpos($link->link, 'vk.com') !== false ) {
+                            $startPos = strpos($link->link, 'href="');
+                            $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
+                            $vk = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
+
+                            echo '<video controls="" name="media"><source src="' . $vk . '" type="video/mp4"></video>';
+                        }*/ else if ((strpos($link->link, 'jpg') !== false) || (strpos($link->link, 'gif') !== false) || (strpos($link->link, 'jpeg') !== false) || (strpos($link->link, 'png') !== false) || (strpos($link->link, 'vk.com/doc') !== false)) {
                             /* TODO: check this timestamp 2/10/2015 18:04:04 and 2/10/2015 16:48:04 and 1/27/2015 10:15:00 */
                             $startPos = strpos($link->link, '">');
                             $endPos = strpos($link->link, '</a>');
@@ -83,7 +89,7 @@ $this->title = 'Fun/news feed';
                                         $endPos = strpos($link->link, '.png');
                                         echo '<img style="max-width: 100%;" src="'. substr($link->link, 0, $endPos+4) . '"/>';
                                     } else {
-                                        echo 'add new if';
+                                        echo 'TODO: add new image checker';
                                     }
                                 } else {
                                     echo '<img style="max-width: 100%;" src="'. substr($link->link, $startPos+2, $endPos - $startPos-2) . '"/>';
@@ -116,7 +122,14 @@ $this->title = 'Fun/news feed';
                             </object>';
                         }*/ /*else if (RUTUBE) {
                             <iframe width="720" height="405" src="//rutube.ru/play/embed/7477613" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
-                        }*/ else {
+                        }*/
+                        else if (strpos($link->link, '9gag') !== false ) {
+                            $startPos = strpos($link->link, 'href="');
+                            $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
+                            $usualLink = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
+
+                            echo '<video controls="" name="media"><source src="' . $usualLink . '" type="video/mp4"></video>';
+                        } else {
                             $startPos = strpos($link->link, 'href="');
                             $endPos = strpos($link->link, '">', $startPos+strlen('href="'));
                             $usualLink = substr($link->link, $startPos+strlen('href="'), $endPos - ($startPos+strlen('href="')));
